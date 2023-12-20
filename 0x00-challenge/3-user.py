@@ -40,7 +40,7 @@ class User():
         if pwd is None or type(pwd) is not str:
             self.__password = None
         else:
-            self.__password = hashlib.md5(pwd.encode()).hexdigest().lower()
+            self._password = hashlib.md5(pwd.encode()).hexdigest().lower()
 
     def is_valid_password(self, pwd):
         """
@@ -50,11 +50,9 @@ class User():
         - `False` if `__password` is `None`
         - Compare `__password` and the MD5 value of `pwd`
         """
-        if pwd is None or not isinstance(pwd, str):
+        if pwd is None or not isinstance(pwd, str) or self.__password is None:
             return False
-        if self.__password is None:
-            return False
-        return hashlib.md5(pwd.encode()).hexdigest().upper() == self.__password
+        return hashlib.md5(pwd.encode()).hexdigest() == self.__password
 
 
 if __name__ == '__main__':
